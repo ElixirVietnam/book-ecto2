@@ -1,4 +1,4 @@
-# Schema và Changset
+# Schema và Changeset
 
 Trong chương trước, chúng ta đã học cách để thực hiện các thao tác với Database, từ việc insert tới delete mà không cần sử dụng Schema. Trong khi chúng ta khám phá khả nưang để viết các câu query mà không cần sử dụng Schema, chúng ta vẫn chưa hề thảo luận vậy schema thực chất là gì?
 
