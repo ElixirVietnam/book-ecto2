@@ -64,7 +64,7 @@ Các hoạt động thêm, cập nhật và xoá cũng được thực hiện th
 ```elixir
 # Insert data into posts and returns its ID
 [%{id: id}] = 
-  MyApp.Repo.insert_all "posts", [[title: "hello]], returning: [:id]
+  MyApp.Repo.insert_all "posts", [[title: "hello"]], returning: [:id]
 
 # User the ID to trigger updates
 post = from p in "posts", where: [id: ^id]
