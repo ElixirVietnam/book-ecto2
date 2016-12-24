@@ -12,7 +12,9 @@ Ecto cung cấp bốn công cụ chính để làm việc với dữ liệu:
 
 * `Ecto.Changset` - Changeset cung cấp một cách để lập trình viên có thể lọc, chuẩn hoá dữ liệu từ các nguồn bên ngoài, cũng như cơ chế để theo dõi những sự thay đổi về dữ liệu trước khi chúng được áp dụng vào một bản ghi.
 
+Cuốn sách này là bản dịch từ cuốn [What 's new with Ecto 2.0](http://blog.plataformatec.com.br/wp-content/uploads/2016/11/whats-new-in-ecto-2-0.pdf) 
 
+Hy vọng thông qua cuốn sách này, chúng tôi có thể góp một phần giúp cho các phong trào học và sử dụng Elixir ở Vietnam trở nên tốt hơn
 
 
 
