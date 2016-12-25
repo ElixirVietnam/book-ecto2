@@ -37,7 +37,7 @@ MyApp.Repo.insert_all(Post, [
 
 Các hàm `*_all` là cho phép các lập trình viên đọc, tạo mới, cập nhận và xoá nhiều đối tượng một lúc. Hãy xem tiếp một vài ví dụ.
 
-Nếu bạn muốn viết một bản báo cáo, nó khá là khó khăn để nghĩ làm sao các Schema trong ứng dụng của bạn lại ánh xạ với một bản báo cáo được sinh ra. Do đó, đơn giản hơn chúng ta sẽ viết một câu query chỉ trả về dữ liệu chúng ta cần mà không cần cố gắng gắn dữ liệu đó với bắt cứ Schema nào cả: 
+Nếu bạn muốn viết một bản báo cáo, nó khá là khó khăn để nghĩ làm sao các Schema trong ứng dụng của bạn lại ánh xạ với một bản báo cáo được sinh ra. Do đó, đơn giản hơn chúng ta sẽ viết một câu query chỉ trả về dữ liệu chúng ta cần mà không cần cố gắng gắn dữ liệu đó với bắt cứ Schema nào cả:
 
 ```elixir
 def running_activities(start_at, end_at)
@@ -80,7 +80,7 @@ Không khó để thấy rằng những hoạt động này được ánh xạ t
 
 Bên cạnh việc hỗ trợ các câu query schemaless để insert, update và delete, Ecto 2.0 cũng khiến các câu query schemaless trở nên dễ đọc hơn.
 
-Một ví dụ của việc này là khả năng để select tất cả các trường mong muốn mà không phải lặp lại. Trong các version trước, bạn phải viết một câu query select như sau:
+Một ví dụ của việc này là khả năng để select tất cả các trường mong muốn mà không phải lặp lại. Trong các phiên bản trước, bạn phải viết một câu query select như sau:
 
 ```elixir
 from p in "posts", select: %{title: p.title, body: p.body}
@@ -119,5 +119,5 @@ def increment_page_views(post) do
 end
 ```
 
-Bằng cách cho phép các cấu trúc dữ liệu thông thường có thể truyền vào hấu hết các hoạt động của query, Ecto 2.0 làm cho các câu query trở nên dễ dàng hơn. Không chỉ vậy, nó còn cho phép các lập trình viên có thể viết ra các cậu query động, khi mà các fields, các điều kiện filters, hoặc ordering không thể xác định trước được. Chúng ta sẽ khám phá chi tiết những tính năng này trong các chương tiếp theo. Hiện tại, hãy cùng tiếp tục xem cách sử dụng schemas trong ngữ cảnh của Changeset
+Bằng cách cho phép các cấu trúc dữ liệu thông thường có thể truyền vào hấu hết các hoạt động của query, Ecto 2.0 làm cho các câu query trở nên dễ dàng hơn. Không chỉ vậy, nó còn cho phép các lập trình viên có thể viết ra các câu query động, khi mà các trường, các điều kiện lọc, hoặc việc sắp xếp kết quả trả về không thể xác định trước được. Chúng ta sẽ khám phá chi tiết những tính năng này trong các chương tiếp theo. Hiện tại, hãy cùng tiếp tục xem cách sử dụng schemas trong ngữ cảnh của Changeset
 
