@@ -5,3 +5,5 @@
 * [Schemaless queries](chapter2.md)
 * [Schemaless changesets](chapter3.md)
 * [Dynamic queries](chapter4.md)
+* [Aggregates và subquery](chapter6.md)
+* [Cải thiện associations và factories](chapter7.md)

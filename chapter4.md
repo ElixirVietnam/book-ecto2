@@ -120,3 +120,20 @@ def filter_published_at(date) when is_binary(data),
 def filter_published_at(date) when is_binary(data),
   do: true
 ```
+
+`dynamic` macro cho phép chúng ta xây dựng những biểu thức động mà sau đó có thể thêm vào (interpolated) vào trong câu query, các biểu thức `dynamic` có thể thêm vào vào chính các biểu thức `dynamic` khác, điều này cho phép các lập trình viên có thể xây dựng những biểu thức động phức tạp.
+
+Bởi vì chúng ta có thể chia nhỏ bài toán thành các hàm nho hơn nhận vào các cấu trúc dữ liệu thông thường, chúng ta có thể sử dụng các công cụ có sẵn trong Elixir để làm việc với các dữ liệu này. Để xử lý tham số `order_by`, có thể cách tốt nhất là sử dụng các pattern matching trên những `order_by` parameter. Để xây dựng các mệnh đề `where`, chúng ta có thể duyệt qua một list các khoá đã biết, và chuyển hoá chúng thành định dạng phù hợp với Ecto. Cho những điều kiện phức tạp, chúng ta dùng `dynamic` macro.
+
+Việc testing sẽ trên nên đơn giản hơn nhiều vì chúng ta có thể test từng hàm riêng biết, thâm chí cả khi sử dụng các query động:
+
+```elixir
+test "filter published at based on the given date" do
+  assert inspect(filter_published_at("2010-04-17")) ==
+         "dynamic([p], p.published_at > ^\"2010-04-17\")"
+  assert inspect(filter_published_at(nil)) ==
+         "true"
+end
+```
+
+Trong khi cuối cùng, một vài lập trình viên sẽ vẩn cảm thấy thoải mái hơn với cách sử dụng `Enum.reduce/3`, tuy nhiên Ecto 2.0 và các phiên bản sau cho chúng ta được quyền lựa chọn cách tiếp cận nào là phù hợp nhất.
