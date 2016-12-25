@@ -65,7 +65,7 @@ MyApp.User
 |> MyApp.Repo.update!
 ```
 
-Bằng cách dựa vào các thông tin của Schema, Ecto sẽ biết cách để đọc và ghi dữ liệu mà không cần thêm các thông tin khác từ lập trình viến \(các thông tin khác ở đây bao gồm: kiểu dữ liệu là gì? table trong Database là gì, ...Các thông tin này đã được định nghĩa ngay khi bạn định nghĩa một Ecto Schema\). Trong những ứng dụng nhỏ, điều này tạo nên sự kết dính giữa các Schema và các table trong Database mà nó đại diện.
+Bằng cách dựa vào các thông tin của Schema, Ecto sẽ biết cách để đọc và ghi dữ liệu mà không cần thêm các thông tin khác từ lập trình viến \(các thông tin khác ở đây bao gồm: kiểu dữ liệu là gì? table trong Database là gì, ...\) Các thông tin này đã được định nghĩa ngay khi bạn định nghĩa một Ecto Schema\). Trong những ứng dụng nhỏ, điều này tạo nên sự kết dính giữa các Schema và các table trong Database mà nó đại diện.
 
 Một Schema của Ecto không nhất thiết phải ánh xạ toàn bộ các trường của nó với tables trong Database. Ngay từ đầu chương, chúng tối muốn nhấn mạnh "Ecto không phải là ORM" nhằm mục đích muốn phân biệt Ecto với các thư viện ORM khác \(Active Record của Rails hay Django ORM\), đồng thời muốn các lập trình viên tránh việc sử dụng Ecto một cách sai trái như trong các thư viện khác.
 
