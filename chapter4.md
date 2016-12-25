@@ -11,7 +11,7 @@ from p in Post,
   order_by: [desc: p.published_at]
 ```
 
-hoặc bằng cú pháp dựa vào pipe nhưa sau:
+hoặc cú pháp dựa vào pipe như sau:
 
 ```elixir
 import Ecto.Query
@@ -75,7 +75,7 @@ Post
 |> order_by(desc: :published_at)
 ```
 
-Chú ý cách chúng ta loại bỏ `p` selector trong phần lớn các biểu thức. Với Ecto 2.0, tất cả các hàm khởi tạo, từ `select` và `order_by` tới `where` và `group_by`, đều chấp nhận các input là các cấu trúc dữ liệu. Các cấu trúc dữ liệu này có thể được xác định tại thời điểm biên dịch (compile-time) như ở trên hoặc là xác định động trong khi chạy (runtime) như dưới đây
+Chú ý cách chúng ta loại bỏ `p` selector trong phần lớn các biểu thức. Với Ecto 2.0, tất cả các hàm khởi tạo, từ `select` và `order_by` tới `where` và `group_by`, đều chấp nhận các input là các cấu trúc dữ liệu. Các cấu trúc dữ liệu này có thể được xác định tại thời điểm biên dịch \(compile-time\) như ở trên hoặc là xác định động trong khi chạy \(runtime\) như dưới đây
 
 ```elixir
 where = [author: "José", category: "Elixir"]
@@ -87,7 +87,7 @@ Post
 |> order_by(^order_by)
 ```
 
-Lợi ích của việc nội suy (interpolating) các cấu trúc dữ liệu như trên đó là chúng ta có thể phân tách quá trình xử lý các parameters khỏi quá trình sinh query. Tuy nhiên không phải tất cả các biểu thức có thể chuyển thành dạng cấu trúc dữ liệu. Cụ thể với cậu lệnh `where` có thể chuyênn hoá dạng key-value thành so sánh bằng `key == value`, nhưng các só sánh khác như `p.published_at > ^mininum_date` vẫn chưa được hỗ trợ.
+Lợi ích của việc nội suy \(interpolating\) các cấu trúc dữ liệu như trên đó là chúng ta có thể phân tách quá trình xử lý các parameters khỏi quá trình sinh query. Tuy nhiên không phải tất cả các biểu thức có thể chuyển thành dạng cấu trúc dữ liệu. Cụ thể với cậu lệnh `where` có thể chuyênn hoá dạng key-value thành so sánh bằng `key == value`, nhưng các só sánh khác như `p.published_at > ^mininum_date` vẫn chưa được hỗ trợ.
 
 Phiên bản tiếp theo Ecto 2.1 sẽ giải quyết những vấn đề này.
 
@@ -121,7 +121,7 @@ def filter_published_at(date) when is_binary(data),
   do: true
 ```
 
-`dynamic` macro cho phép chúng ta xây dựng những biểu thức động mà sau đó có thể thêm vào (interpolated) vào trong câu query, các biểu thức `dynamic` có thể thêm vào vào chính các biểu thức `dynamic` khác, điều này cho phép các lập trình viên có thể xây dựng những biểu thức động phức tạp.
+`dynamic` macro cho phép chúng ta xây dựng những biểu thức động mà sau đó có thể thêm vào \(interpolated\) vào trong câu query, các biểu thức `dynamic` có thể thêm vào vào chính các biểu thức `dynamic` khác, điều này cho phép các lập trình viên có thể xây dựng những biểu thức động phức tạp.
 
 Bởi vì chúng ta có thể chia nhỏ bài toán thành các hàm nho hơn nhận vào các cấu trúc dữ liệu thông thường, chúng ta có thể sử dụng các công cụ có sẵn trong Elixir để làm việc với các dữ liệu này. Để xử lý tham số `order_by`, có thể cách tốt nhất là sử dụng các pattern matching trên những `order_by` parameter. Để xây dựng các mệnh đề `where`, chúng ta có thể duyệt qua một list các khoá đã biết, và chuyển hoá chúng thành định dạng phù hợp với Ecto. Cho những điều kiện phức tạp, chúng ta dùng `dynamic` macro.
 
@@ -137,3 +137,4 @@ end
 ```
 
 Trong khi cuối cùng, một vài lập trình viên sẽ vẩn cảm thấy thoải mái hơn với cách sử dụng `Enum.reduce/3`, tuy nhiên Ecto 2.0 và các phiên bản sau cho chúng ta được quyền lựa chọn cách tiếp cận nào là phù hợp nhất.
+
