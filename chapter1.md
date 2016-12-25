@@ -38,7 +38,7 @@ Với việc không hề có các đối tượng trong Elixir, hiển nhiên Ec
 
 ## Relational Mappers
 
-ORM là một kỹ thuật để chuyển đổi dữ liệu giữa các hệ thống không tương thích trực tiếp với nhau, thông thường là giữa Databases tới các objects và ngược lại
+ORM là một kỹ thuật để chuyển đổi dữ liệu giữa các hệ thống không tương thích trực tiếp với nhau, thông thường là giữa Databases tới các objects và ngược lại.
 
 Tương tự, Ecto cung cấp các `Schema` để ánh xạ từ bất cứ nguồn dữ liệu nào tới một Elixir struct. Khi áp dụng vào các Database, Ecto Schema sẽ trở thành các Relational Mappers. Việc ánh xạ từ từ các Database vào Schema chỉ là một trong nhiều chức năng mà Ecto muốn cung cấp. Với sự linh hoạt trong thiết kế của mình, Ecto là một **tập các công cụ để giúp lập trình viên làm việc với cả nguồn dữ liệu khác nhau**, và Database là một nguồn phổ biến.
 
