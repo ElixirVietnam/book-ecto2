@@ -1,6 +1,6 @@
 # Schema và Changeset
 
-Trong chương trước, chúng ta đã học cách để thực hiện các thao tác với Database, từ việc insert tới delete mà không cần sử dụng Schema. Trong khi chúng ta khám phá khả nưang để viết các câu query mà không cần sử dụng Schema, chúng ta vẫn chưa hề thảo luận vậy schema thực chất là gì?
+Trong chương trước, chúng ta đã học cách để thực hiện các thao tác với Database, từ việc insert tới delete mà không cần sử dụng Schema. Trong khi chúng ta khám phá khả năng để viết các câu query mà không cần sử dụng Schema, chúng ta vẫn chưa hề thảo luận vậy schema thực chất là gì?
 
 Trong chương này, chúng ta sẽ xem xét vai trò của schema trong khi validate và chuyển hoá dữ liệu thông qua Changset. Như chúng ta sẽ thấy, đôi khi giải pháp tốt nhất là không thể loại bỏ hoàn toàn các Schema mà phải chia nhỏ chúng thành các Schema nhỏ hơn. Có thể là một Schema cho đọc dữ liêu, một schema khác cho việc cập nhật. Cũng có thể một schema cho Database, một cái khác cho các forms.
 
@@ -41,9 +41,9 @@ defmodule Profile do
 end
 ```
 
-Không khó để thấy rằng, chúng ta đang "gây ô nhiễm" `Profile` schema với các yêu cầu từ phía UI bằng cách thêm các trường `first_name`, và `last_name`. Nếu `Profile` schema được dùng cho cả viết đọc và ghi dữ liệu, nó có thể trở thành một nơi không phù hợp, vì nó chửa các trường chì phù hợp với một mục đích (trong trường hợp này, là mục đích cho form đăng ký).
+Không khó để thấy rằng, chúng ta đang "gây ô nhiễm" `Profile` schema với các yêu cầu từ phía UI bằng cách thêm các trường `first_name`, và `last_name`. Nếu `Profile` schema được dùng cho cả viết đọc và ghi dữ liệu, nó có thể trở thành một nơi không phù hợp, vì nó chửa các trường chì phù hợp với một mục đích \(trong trường hợp này, là mục đích cho form đăng ký\).
 
-Một giải pháp khác đó là chia `Database <-> Ecto schema <-> Forms / API` thành hai phần. Phần thứ nhất sẽ chuyển đổi (cast) và kiểm định (validate) dữ liêu từ bên ngoài với cấu trúc dữ liệu riêng của nó, bằng cách này bạn có thể chuyển hoá (transform) dữ liệu, và viết vào Database. Cho hoạt động này, chúng ta sẽ định nghĩa một schema tên là `Registration`. Schema này sẽ làm nhiệm vụ casting và validating dữ liệu từ form, nó ánh xạ trực tiếp tới các trường của UI
+Một giải pháp khác đó là chia `Database <-> Ecto schema <-> Forms / API` thành hai phần. Phần thứ nhất sẽ chuyển đổi \(cast\) và kiểm định \(validate\) dữ liêu từ bên ngoài với cấu trúc dữ liệu riêng của nó, bằng cách này bạn có thể chuyển hoá \(transform\) dữ liệu, và viết vào Database. Cho hoạt động này, chúng ta sẽ định nghĩa một schema tên là `Registration`. Schema này sẽ làm nhiệm vụ casting và validating dữ liệu từ form, nó ánh xạ trực tiếp tới các trường của UI
 
 ```elixir
 defmodule Registration do
@@ -123,3 +123,4 @@ changeset =
 Bạn có thể sử dụng kỹ thuật này để validate các API endpoints, form tìm kiếm, và các nguồn dữ liệu khác. Việc lựa chọn sử dụng schema phụ thuộc phần lớn vào việc bạn muốn dùng lại schema đó ở một nơi khác, hoặc là bạn muốn có được những đảm bảo của schema struct trong lúc biên dịch. Nói cách khác, bạn có thể bỏ qua schema trong lúc sử dụng Changeset hoặc trong lúc tương tác với Repository
 
 Tuy nhiên, bài học quan trọng nhất ở chương này không phải là khi nào nên dùng hoặc không nên dùng schema, mà đó là hiểu được rằng khi nào một bài toán lớn được chia thành các bài toán nhỏ hơn, mà việc giải những bài toán nhỏ này có độc lập với nhau có thể làm cho code của chúng ta trở nên tốt hơn. Việc lựa chọn sử dụng hay không sử dụng schema như ở trên không ảnh hưởng nhiều tới cách giải quyết vấn đề.
+
