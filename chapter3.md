@@ -2,7 +2,7 @@
 
 Trong chương trước, chúng ta đã học cách để thực hiện các thao tác với Database, từ việc insert tới delete mà không cần sử dụng Schema. Trong khi chúng ta khám phá khả năng để viết các câu query mà không cần sử dụng Schema, chúng ta vẫn chưa hề thảo luận vậy schema thực chất là gì?
 
-Trong chương này, chúng ta sẽ xem xét vai trò của schema trong khi validate và chuyển hoá dữ liệu thông qua Changset. Như chúng ta sẽ thấy, đôi khi giải pháp tốt nhất là không thể loại bỏ hoàn toàn các Schema mà phải chia nhỏ chúng thành các Schema nhỏ hơn. Có thể là một Schema cho đọc dữ liêu, một schema khác cho việc cập nhật. Cũng có thể một schema cho Database, một cái khác cho các forms.
+Trong chương này, chúng ta sẽ xem xét vai trò của schema trong khi đánh giá và chuyển hoá dữ liệu thông qua Changeset. Như chúng ta sẽ thấy, đôi khi giải pháp tốt nhất là không thể loại bỏ hoàn toàn các Schema mà phải chia nhỏ chúng thành các Schema nhỏ hơn. Có thể là một Schema cho đọc dữ liêu, một schema khác cho việc cập nhật. Cũng có thể một schema cho Database, một cái khác cho các forms.
 
 ## Schema là các mapper
 
@@ -20,9 +20,9 @@ Database <-> Ecto Schema <-> Forms / API
 
 Mặc dù chỉ có một Ecto schema được dùng để ánh xạ giữa Database và API của bạn, nhưng trong nhiều tình huống, chúng ta nên chia nó thành hai loại ánh xạ. Hãy cùng xem một số ví dụ thực tế.
 
-Giả sử bạn đang làm với một kháng hàng muốn form đăng ký gồm có các trường "First nam", "Last name" cùng với trường "Email" và các thông tin khác. Bạn biết có một vài vấn đề với cách tiếp cận này.
+Giả sử bạn đang làm việc với một khách hàng muốn form đăng ký gồm có các trường _first name_, _last name_ cùng với trường _email_ và các thông tin khác. Bạn biết có một vài vấn đề với cách tiếp cận này.
 
-Đầu tiên, không phải tất cả mọi người đều có first name và last name. Mặc dù khách hàng của bạn quyết định rằng sẽ hiện thị cả 2 trường, chúng là những vấn đề của UI, và bạn không muốn UI sẽ quyết định tới các bạn tổ chức dữ liệu trong Database. Thêm vào đó, bạn biết rằng nó sẽ hữu dụng hơn nếu chia thông tin của form đăng ký thành hai tables: "accounts" và "profiles".
+Đầu tiên, không phải tất cả mọi người đều có _first name_ và _last name_. Mặc dù khách hàng của bạn quyết định rằng sẽ hiện thị cả 2 trường, chúng vẫn chỉ là những vấn đề của UI, và bạn không hề muốn UI sẽ quyết định tới cách bạn tổ chức dữ liệu trong Database. Thêm vào đó, bạn biết rằng nó sẽ hữu dụng hơn nếu chia thông tin của form đăng ký thành hai tables: _accounts_ và _profiles._
 
 Với những thông tin kể trên, chúng ta sẽ cài đặt chức năng đăng ký như nào ở phía backend?
 
@@ -41,9 +41,9 @@ defmodule Profile do
 end
 ```
 
-Không khó để thấy rằng, chúng ta đang "gây ô nhiễm" `Profile` schema với các yêu cầu từ phía UI bằng cách thêm các trường `first_name`, và `last_name`. Nếu `Profile` schema được dùng cho cả viết đọc và ghi dữ liệu, nó có thể trở thành một nơi không phù hợp, vì nó chửa các trường chì phù hợp với một mục đích \(trong trường hợp này, là mục đích cho form đăng ký\).
+Không khó để thấy rằng, chúng ta đang "gây ô nhiễm" `Profile` schema với các yêu cầu từ phía UI bằng cách thêm các trường `first_name`, và `last_name`. Nếu `Profile` schema được dùng cho cả việc đọc và ghi dữ liệu, nó có thể trở thành một nơi không phù hợp, vì nó chửa các trường chì phù hợp với một mục đích \(trong trường hợp này, là mục đích cho form đăng ký\).
 
-Một giải pháp khác đó là chia `Database <-> Ecto schema <-> Forms / API` thành hai phần. Phần thứ nhất sẽ chuyển đổi \(cast\) và kiểm định \(validate\) dữ liêu từ bên ngoài với cấu trúc dữ liệu riêng của nó, bằng cách này bạn có thể chuyển hoá \(transform\) dữ liệu, và viết vào Database. Cho hoạt động này, chúng ta sẽ định nghĩa một schema tên là `Registration`. Schema này sẽ làm nhiệm vụ casting và validating dữ liệu từ form, nó ánh xạ trực tiếp tới các trường của UI
+Một giải pháp khác đó là chia `Database <-> Ecto schema <-> Forms / API` thành hai phần. Phần thứ nhất sẽ chuyển đổi \(cast\) và kiểm định \(validate\) dữ liệu từ bên ngoài với cấu trúc dữ liệu riêng của nó, bằng cách này bạn có thể chuyển hoá \(transform\) dữ liệu, và ghi vào Database. Cho hoạt động này, chúng ta sẽ định nghĩa một schema tên là `Registration`. Schema này sẽ làm nhiệm vụ casting và validating dữ liệu từ form, nó ánh xạ trực tiếp tới các trường của UI:
 
 ```elixir
 defmodule Registration do
@@ -69,7 +69,7 @@ changeset =
   |> validate_length(...)
 ```
 
-Bây giờ, dựa vào kết quả của `changeset`, chúng ta có thể kiêm tra xem dữ liệu đầu là là có đạt chuẩn hay không, và có hành đọng tương ứng
+Bây giờ, dựa vào kết quả của `changeset`, chúng ta có thể kiểm tra xem dữ liệu đầu vào là có đạt chuẩn hay không, và có hành động tương ứng:
 
 ```elixir
 if changeset.valid? do
@@ -101,9 +101,9 @@ def to_profile(%{first_name: first, last_name: last}) do
 end
 ```
 
-Trong ví dụ ở trên, việc chia ánh xạ thành 2 phần: ánh xạ giữa Database và Elixir, và giữa Elixir và UI, code của chúng ta trở nên sáng sủa hơn, và các cấu trúc dữ liệu cũng đơn giản hơn.
+Trong ví dụ ở trên, việc chia ánh xạ thành 2 phần: ánh xạ giữa Database với Elixir, và giữa Elixir với UI, code của chúng ta trở nên sáng sủa hơn, và các cấu trúc dữ liệu cũng đơn giản hơn.
 
-Chú ý rằng chúng ta đã sử dung `MyApp.Repo.insert_all/2` để thêm dữ liệu vào cả 2 bảng `accounts`, và `profiles` một cách trực tiếp không thông qua schema. Tuy nhiên, bạn cũng có thể định nghĩa cả `Account` và `Profile` schema, rồi sau đó sửa lại 2 hàm `to_account/1` và `to_profile/1` để chúng trả về `%Account{}` và `%Profile{}` tương ứng. Lúc đó, chúng ta có thể insert các struct trả về vào Database bằng cách sử dụng `MyApp.Repo.insert/2`. Việc này đặc biệt hữu ích nếu chúng ta cần kiểm tra tính duy nhất hoặc các constraints khác trong quá trình insert dữ liệu.
+Chú ý rằng chúng ta đã sử dung `MyApp.Repo.insert_all/2` để thêm dữ liệu vào cả 2 bảng `accounts`, và `profiles` một cách trực tiếp không thông qua schema. Tuy nhiên, bạn cũng có thể định nghĩa cả `Account` và `Profile` schema, rồi sau đó sửa lại 2 hàm `to_account/1` và `to_profile/1` để chúng trả về `%Account{}` và `%Profile{}` tương ứng. Lúc đó, chúng ta có thể insert các struct trả về vào Database bằng cách sử dụng `MyApp.Repo.insert/2`. Việc này đặc biệt hữu ích nếu chúng ta cần kiểm tra tính duy nhất hoặc các điều kiện với Database khác trong quá trình insert dữ liệu.
 
 ## Schemaless changeset
 
@@ -120,7 +120,7 @@ changeset =
   |> validate_length(...)
 ```
 
-Bạn có thể sử dụng kỹ thuật này để validate các API endpoints, form tìm kiếm, và các nguồn dữ liệu khác. Việc lựa chọn sử dụng schema phụ thuộc phần lớn vào việc bạn muốn dùng lại schema đó ở một nơi khác, hoặc là bạn muốn có được những đảm bảo của schema struct trong lúc biên dịch. Nói cách khác, bạn có thể bỏ qua schema trong lúc sử dụng Changeset hoặc trong lúc tương tác với Repository
+Bạn có thể sử dụng kỹ thuật này để kiểm định các API endpoints, form tìm kiếm, và các nguồn dữ liệu khác. Việc lựa chọn sử dụng schema phụ thuộc phần lớn vào việc bạn muốn dùng lại schema đó ở một nơi khác, hoặc là bạn muốn có được những đảm bảo của schema struct trong lúc biên dịch. Nói cách khác, bạn có thể bỏ qua schema trong lúc sử dụng Changeset hoặc trong lúc tương tác với Repository
 
 Tuy nhiên, bài học quan trọng nhất ở chương này không phải là khi nào nên dùng hoặc không nên dùng schema, mà đó là hiểu được rằng khi nào một bài toán lớn được chia thành các bài toán nhỏ hơn, mà việc giải những bài toán nhỏ này có độc lập với nhau có thể làm cho code của chúng ta trở nên tốt hơn. Việc lựa chọn sử dụng hay không sử dụng schema như ở trên không ảnh hưởng nhiều tới cách giải quyết vấn đề.
 
