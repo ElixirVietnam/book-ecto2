@@ -4,7 +4,7 @@ Elixir không phải là ngôn ngữ lập trình hương đối tượng, chín
 
 ## Object
 
-Đối tượng bao hàm trạng thái \(`state`\) và các hành vi \(`behaviour`\). Trong cùng một đối tượng `user`, bạn vừa có thể có dữ liệu, giống như `user.name`, vừa có thể có các hành vi của đối tượng, ví dụ như xác nhận một tài khoản thông qua một phương thức `user.confirm()`.
+Đối tượng bao gồm trạng thái \(`state`\) và các hành vi \(`behaviour`\). Trong cùng một đối tượng `user`, bạn vừa có thể có dữ liệu, giống như `user.name`, vừa có thể có các hành vi của đối tượng, ví dụ như xác nhận một tài khoản thông qua một phương thức `user.confirm()`.
 
 Tuy nhiên điều này là không thể với Elixir. Trong Elixir, chúng ta làm việc với các kiểu dữ liệu khác nhau như `tuple`, `list`, `map`, ... Các hành vi không thể được gắn với đối tượng của dữ liệu như vậy. Hành vi trong Elixir luôn luôn được thêm vào các modules thông qua các hàm.
 
