@@ -2,7 +2,7 @@
 
 Bên cạnh các mối quan hệ `belongs_to`, `has_one`, `has_many` và `:through`, Ecto 2.0 hỗ trợ cả mối quan hệ `many_to_many`. Quan hệ `many_to_many`, như tên gọi của nó, cho phép X có thể có nhiều association với Y và ngược lại. Mặc dù `many_to_many` có thể được viết thông qua `has_many :through`, tuy nhiên `many_to_many` có thể làm đơn giản hoá một số luồng làm việc.
 
-Trong chương này, chúng ta sẽ nói về mối quan hệ đa hình, và cách mà `many_to_many` có thể giúp loại bớt các đoạn code rườm khi so sánh với cách tiếp cận sử dụng `has_many :through`.
+Trong chương này, chúng ta sẽ nói về mối quan hệ đa hình, và cách mà `many_to_many` có thể giúp loại bớt các đoạn code rườm rà khi so sánh với cách tiếp cận sử dụng `has_many :through`.
 
 ## Todo list
 
@@ -59,7 +59,7 @@ Khi một form được submit trong Phoenix, nó sẽ truyền lên những tha
 }
 ```
 
-Chúng ta có thể nhận vào những tham số kể trên, và truyền nó cho một Ecto changset, sau đó Ecto tự động xác định được những việc cần phải làm:
+Chúng ta có thể nhận vào những tham số kể trên, và truyền nó cho một Ecto changeset, sau đó Ecto tự động xác định được những việc cần phải làm:
 
 ```elixir
 # In MyApp.TodoList
@@ -76,23 +76,23 @@ def changeset(struct, params \\ %{}) do
 end
 ```
 
-Bằng cách gọi `Ecto.Changeset.cast_assoc/3`, Ecto sẽ tìm kiêm khoá "todo_items" trong các tham số truyền vào để ép kiểu, và so sánh những tham số này với các items đã được lưu lại trong cấu trúc của todo list. Ecto cũng tự động sinh ra các chỉ thị để insert, update hoặc delete các todo items như sau:
+Bằng cách gọi `Ecto.Changeset.cast_assoc/3`, Ecto sẽ tìm kiếm khoá "todo_items" trong các tham số truyền vào để ép kiểu, và so sánh những tham số này với các items đã được lưu lại trong cấu trúc của todo list. Ecto cũng tự động sinh ra các chỉ thị để insert, update hoặc delete các todo items như sau:
 
 + Nếu một todo item được truyền như một tham số có ID, và nó bằng với một todo item đã được gắn với todo list, chúng ta sẽ coi đó là hành động update todo item.
 + Nếu một todo item được truyền vào không có ID (hoặc không bằng với bất cứ ID nào), chúng ta sẽ coi đó là hành động thêm mới một todo item.
 + Nếu một todo item đang được gắn với todo list, nhưng ID của nó không được truyền vào như một tham số, chúng ta coi todo item đó đã được thay thế, và chúng ta sẽ hành động dựa vào callback `:on_replace`. Mặc định `:on_replace` sẽ được gọi, vì thế bạn có thể chọn một cách hành xử giữa việc thay thế, xoá, bỏ quả hoăc là nillifying association.
 
-Lợi điểm của việc sử dụng `cast_assoc/3` đó là **nếu như chúng ta truyền vào dữ liệu chính xác như những định dạng mà Ecto mong muốn**, nó có thể làm tất cả những việc khó để giữ cho các bản ghi được liên kết với nhau. Tuy nhiên, như chúng ta học được ở 3 chương đầu của cuốn sách này, cách tiếp cận này không phải là cách làm mong muốn trong mọi trường hợp, và trong rất nhiều tình huống, chúng ta muốn thiết kế các associations khác biệt hơn, hoặc là phân tách giữa UI và việc biểu diễn Database của chúng ta.
+Lợi điểm của việc sử dụng `cast_assoc/3` đó là **nếu như chúng ta truyền vào dữ liệu chính xác như những định dạng mà Ecto mong muốn**, nó có thể làm tất cả những việc khó để giữ cho các bản ghi được liên kết với nhau. Tuy nhiên, như chúng ta học được ở 3 chương đầu của cuốn sách này, cách tiếp cận này không phải là cách làm mong muốn trong mọi trường hợp, và trong rất nhiều tình huống, chúng ta muốn thiết kế các associations khác biệt hơn, hoặc là phân tách giữa UI với việc biểu diễn Database của chúng ta.
 
 ## Đa hình hoá todo items
 
 Giả sử bạn muốn đa hình hoá các "todo item". Ví dụ, bạn muốn có thể thêm các "todo item" vào không chỉ các "todo list" mà còn vào rất nhiều phần khác của ứng dụng, ví dụ như các projects, hoặc các ngày, ...
 
-Đầu tiên, cần nhớ rằng Ecto không cung cấp cùng một loại association đa hình giống như các framework khác như Rails hoặc Laravel. Trong những framework này, một association đa hình sử hai cột, `parent_id` và `parent_type`. Ví dụ, một "todo item" có thể có `parent_id` bằng 1 với `parent_type` là "TodoList", trong khi đó một "todo item" khác có thể có `parent_id` bằng 1 nhưng `parent_type` bằng "Project".
+Đầu tiên, cần nhớ rằng Ecto không cung cấp cùng một loại association đa hình giống như các framework khác như Rails hoặc Laravel. Trong những framework này, một association đa hình sử dụng hai cột, `parent_id` và `parent_type`. Ví dụ, một "todo item" có thể có `parent_id` bằng 1 với `parent_type` là "TodoList", trong khi đó một "todo item" khác có thể có `parent_id` bằng 1 nhưng `parent_type` bằng "Project".
 
 Vấn đề với thiết kế ở trên đó là nó phá vỡ sự tham chiếu trong Database. Database sẽ không còn có khả năng đảm bảo item trong các association tồn tại hoặc sẽ tồn tại trong tương lai. Điều này dẫn tới sự thiếu đồng bộ trong Database, và kết quả là rất nhiều giải pháp tạm thời chỉ đề giải quyết nó.
 
-Thiết kế ở trên cũng đặc biệt không hiệu quả. Trong quá khứ, chúng tôi đã làm việc với rất nhiều khách hàng lớn để loại trừ những kiểu đa hình tham chiếu như vậy bởi vì những câu query đa hình thường xuyên khiên cho Database ngừng hoạt động, kể cả khi đã thêm vào các indexes và tối ưu Database.
+Thiết kế ở trên cũng đặc biệt không hiệu quả. Trong quá khứ, chúng tôi đã làm việc với rất nhiều khách hàng lớn để loại trừ những kiểu đa hình tham chiếu như vậy bởi vì những câu query đa hình thường xuyên khiến cho Database ngừng hoạt động, kể cả khi đã thêm vào các indexes và tối ưu Database.
 
 May mắn thay, [tài liệu cho macro `belongs_to` bao gồm cả những ví dụ về cách thiết kế một hệ thống đúng đắn cho những associations kiều này](https://hexdocs.pm/ecto/Ecto.Schema.html#belongs_to/3-polymorphic-associations). Một trong những cách tiếp cận đó bao gồm việc sử dụng nhiều bảng nối khác. Bên cạnh các table "todo_list", "project"" và "todo_items", chúng ta có thể tạo thêm các bảng "todo_list_items" và "project_items" để kết nối "todo item" với "todo list" và "todo item" với "project" tương ứng. Chúng ta có thể tạo ra các migration script như sau:
 
