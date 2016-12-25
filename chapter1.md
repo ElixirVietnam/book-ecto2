@@ -77,4 +77,4 @@ Sau đây là một số vấn đề thường gặp phải khi sử dụng Ecto
 
 + Các lập trình viên thường cố gắng sử dụng cùng một schema cho những hoạt động khá khác biệt về mặt cấu trúc. Rất nhiều ứng dụng thường gắn các tính năng như đăng ký, đăng nhập vào một User scheam, trong khi việc xử lý những hành động này là riêng biết. Cách tốt hơn đó là chúng ta có thể chia ra mỗi hành động sử dụng một schema (và schema này có thể không cần ánh xạ với một bảng trong cơ sở dữ liệu)
 
-Trong hai chương kế tiếp, chúng ta sẽ chia nhỏ những "bad practices" kể trên bằng cách khám phá cách sư dụng Ecto mà không sử dụng hoặc sử dụng nhiều schema trong một ngữ cảnh. Thông qua việc học cách `insert`, `delele`, thay đổi và `validate` dữ liệu với Ecto. 
+Trong hai chương kế tiếp, chúng ta sẽ chia nhỏ những "bad practices" kể trên bằng cách khám phá cách sư dụng Ecto mà không sử dụng hoặc sử dụng nhiều schema trong một ngữ cảnh. Thông qua việc học cách `insert`, `delele`, thay đổi và `validate` dữ liệu với Ecto.
