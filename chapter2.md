@@ -20,9 +20,9 @@ MyApp.Repo.all(from p in "posts", select: {p.title, p.body})
 
 Những câu query không sử dụng schema như 2 câu query kể trên, được gọi là Schemaless query. Khi viết schemaless query, chúng ta phải chỉ rõ ra những trường mà chúng ta muốn select từ database.
 
-Mặc dù các câu schemaless query rất flexible, nhưng chúng khá là verbose, các lập trình viên phải viết đi viết lại các câu select. Không chỉ vậy, Ecto 1.0 không cho phép bạn insert thêm bản ghi vào Database mà không có schema.
+Mặc dù các câu schemaless query rất linh động, nhưng chúng khá là rườm rà, các lập trình viên phải viết đi viết lại các câu select. Không chỉ vậy, Ecto 1.0 không cho phép bạn insert thêm bản ghi vào Database mà không có schema.
 
-Ecto 2.0 hỗ trợ rất nhiều tính năng mới với các schemaless queries, không chỉ cải thiện cú pháp để đọc và update dữ liệu, mà còn cho phép các hoạt động của Database có thể biểu diễn mà không cần schema
+Ecto 2.0 hỗ trợ rất nhiều tính năng mới với các schemaless queries, không chỉ cải thiện cú pháp để đọc và cập nhật dữ liệu, mà còn cho phép các hoạt động của Database có thể biểu diễn mà không cần schema.
 
 ## insert\_all
 
@@ -35,9 +35,9 @@ MyApp.Repo.insert_all(Post, [
 ])
 ```
 
-Các hàm `*_all` là cho phép các lập trình viên đọc, tạo mới, cập nhận và xoá nhiều đối tượng một lúc. Hãy xem tiếp một vài ví dụ
+Các hàm `*_all` là cho phép các lập trình viên đọc, tạo mới, cập nhận và xoá nhiều đối tượng một lúc. Hãy xem tiếp một vài ví dụ.
 
-Nếu bạn muốn viết một bản báo cáo, nó khá là khó khăn để nghĩ rằng làm sao các Schema trong ứng dụng của bạn lại ánh xạ với một bản báo cáo được sinh ra. Do đó, đơn giản hơn chúng ta sẽ viết một câu query chỉ trả về dữ liệu chúng ta cần mà không cần cố gắng gắn dữ liệu đó với bắt cứ Schema nào cả
+Nếu bạn muốn viết một bản báo cáo, nó khá là khó khăn để nghĩ làm sao các Schema trong ứng dụng của bạn lại ánh xạ với một bản báo cáo được sinh ra. Do đó, đơn giản hơn chúng ta sẽ viết một câu query chỉ trả về dữ liệu chúng ta cần mà không cần cố gắng gắn dữ liệu đó với bắt cứ Schema nào cả
 
 ```elixir
 def running_activities(start_at, end_at)
