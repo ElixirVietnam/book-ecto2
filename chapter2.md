@@ -6,7 +6,7 @@ Phần lớn các queries trong Ecto được viết bằng cách sử dụng Sc
 MyApp.Repo.all(Post)
 ```
 
-Trong câu query trên, Ecto biết tất cả các trường và kiểu của từng trường trong `Post` schema, chúng ta có thể viết lại câu query trên mà không dùng schema như sau
+Trong câu query trên, Ecto biết tất cả các trường và kiểu của từng trường trong `Post` schema, chúng ta có thể viết lại câu query trên mà không dùng schema như sau:
 
 ```elixir
 MyApp.Repo.all(from p in Post, select: %Post{title: p.title, body: p.body, ...}}
@@ -92,7 +92,7 @@ Với Ecto 2.0, bạn đơn giản chỉ cần truyền vào một list các tr�
 from p in "posts", select [:title, :body]
 ```
 
-Hai câu queries ở trên là tương đương với nhau. Khi nhận được một list các trường, Ecto sẽ tự động chuyển list các trường này thành một `map` hoặc `struct`. 
+Hai câu queries ở trên là tương đương với nhau. Khi nhận được một list các trường, Ecto sẽ tự động chuyển list các trường này thành một `map` hoặc `struct`.
 
 Việc hỗ trợ truyền vào một list các trường hoặc một keyword list đã được thêm vào hầu hết các câu query của Ecto 2.0. Ví dụ, chúng ta có thể sử dụng một câu query update để thay đổi title của tất cả các post mà không dùng schema:
 
@@ -105,14 +105,14 @@ end
 
 Hàm `update` cũng hỗ trợ bốn câu lệnh:
 
-+ `:set` - thay đổi giá trị của một cột với một gía trị cụ thể
-+ `:inc` - tăng giá trị của côt lên một giá trị cụ thể
-+ `:push` - đẩy một giá trị mới vào mảng
-+ `:pull` - xoá một giá trị cụ thể ra khỏi mảng
+* `:set` - thay đổi giá trị của một cột với một gía trị cụ thể
+* `:inc` - tăng giá trị của côt lên một giá trị cụ thể
+* `:push` - đẩy một giá trị mới vào mảng
+* `:pull` - xoá một giá trị cụ thể ra khỏi mảng
 
-Ví dụ, chúng ta có thể tăng giá trị của cột một cách tự động bằng cách sự dụng lệnh `:inc` (sử dụng hoặc không sử dụng schema)
+Ví dụ, chúng ta có thể tăng giá trị của cột một cách tự động bằng cách sự dụng lệnh `:inc` \(sử dụng hoặc không sử dụng schema\)
 
-``` elixir
+```elixir
 def increment_page_views(post) do
   query = from "posts", where: [id: ^post.id], update: [inc: [page_views: 1]]
   MyApp.Repo.update_all(query)
@@ -120,3 +120,4 @@ end
 ```
 
 Bằng cách cho phép các cấu trúc dữ liệu thông thường có thể truyền vào hấu hết các hoạt động của query, Ecto 2.0 làm cho các câu query trở nên dễ dàng hơn. Không chỉ vậy, nó còn cho phép các lập trình viên có thể viết ra các cậu query động, khi mà các fields, các điều kiện filters, hoặc ordering không thể xác định trước được. Chúng ta sẽ khám phá chi tiết những tính năng này trong các chương tiếp theo. Hiện tại, hãy cùng tiếp tục xem cách sử dụng schemas trong ngữ cảnh của Changeset
+
