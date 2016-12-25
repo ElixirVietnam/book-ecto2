@@ -6,7 +6,7 @@ Elixir không phải là ngôn ngữ lập trình hương đối tượng, chín
 
 Đối tượng bao hàm trạng thái \(`state`\) và các hành vi \(`behaviour`\). Trong cùng một đối tượng `user`, bạn vừa có thể có dữ liệu, giống như `user.name`, vừa có thể có các hành vi của đối tượng, ví dụ như xác nhận một tài khoản thông qua một phương thức `user.confirm()`.
 
-Tuy nhiên điều này là không thể với Elixir. Trong Elixir, chúng ta làm việc với các kiểu dữ liệu khác nhau như `tuple`, `list`, `map`, ... Các hành vi không thể được gắp với đối tượng của dữ liệu như vậy. Hành vi trong Elixir luôn luôn được thêm vào các modules thông qua các hàm.
+Tuy nhiên điều này là không thể với Elixir. Trong Elixir, chúng ta làm việc với các kiểu dữ liệu khác nhau như `tuple`, `list`, `map`, ... Các hành vi không thể được gắn với đối tượng của dữ liệu như vậy. Hành vi trong Elixir luôn luôn được thêm vào các modules thông qua các hàm.
 
 Để làm việc với một kiểu dữ liệu có cấu trúc, Elix cung cấp các `struct`. Struct định nghĩa một tập các trường. Một `struct` sẽ được tham chiếu bởi tên của module mà nó được định nghĩa bên trong
 
@@ -73,8 +73,9 @@ Sau đây là một số vấn đề thường gặp phải khi sử dụng Ecto
 
 * Các dự án sử dụng Ecto có thể dẫn tới tình trạng `God Schemas`, hay thường được biết với tên `God Models`, `Fat Models` hoặc `Canonical Models` trong các ngôn ngữ và frameworks khác. Những schema này thường chứa hàng trăm trường, và thường biển thị  những quyết định kém về mặt thiết kế ở tằng dữ liệu. Thay vì cung cấp một schema với rất nhiều trường phục vụ nhiều ý nghĩa khác nhau, tốt hơn chúng ta nên chia nhỏ schema dựa vào các ngữ cảnh. Ví dụ, thay vì có một `MyApp.User` với hàng tá trường, có thể cân nhắc việc chia nó thành `MyApp.Account.User`, `MyApp.Purchases.User`, ... Mỗi struct chỉ chứa các trường nằm trong ngữ cảnh của nó mà thôi.
 
-+ Các lập trình viện thường dựa dẫm nhiều vào schema, trong khi cách tốt nhất để lấy dữ liệu từ Database là dựa vào các cấu trúc dũ liệu thống thường (giống như `map`, `tuple` hoặc các struct chưa được định nghĩa trước). Ví dụ, khi gọi một hàm searchs, hoặc sinh ra các báo cáo, không có lý do gì để phụ thuộc hoặc trả về các schema từ những câu query nào vì chúng thường dựa vào dữ liệu từ nhiều tables với những yêu cầu khác nhau.
+* Các lập trình viện thường dựa dẫm nhiều vào schema, trong khi cách tốt nhất để lấy dữ liệu từ Database là dựa vào các cấu trúc dũ liệu thống thường \(giống như `map`, `tuple` hoặc các struct chưa được định nghĩa trước\). Ví dụ, khi gọi một hàm searchs, hoặc sinh ra các báo cáo, không có lý do gì để phụ thuộc hoặc trả về các schema từ những câu query nào vì chúng thường dựa vào dữ liệu từ nhiều tables với những yêu cầu khác nhau.
 
-+ Các lập trình viên thường cố gắng sử dụng cùng một schema cho những hoạt động khá khác biệt về mặt cấu trúc. Rất nhiều ứng dụng thường gắn các tính năng như đăng ký, đăng nhập vào một User scheam, trong khi việc xử lý những hành động này là riêng biết. Cách tốt hơn đó là chúng ta có thể chia ra mỗi hành động sử dụng một schema (và schema này có thể không cần ánh xạ với một bảng trong cơ sở dữ liệu)
+* Các lập trình viên thường cố gắng sử dụng cùng một schema cho những hoạt động khá khác biệt về mặt cấu trúc. Rất nhiều ứng dụng thường gắn các tính năng như đăng ký, đăng nhập vào một User scheam, trong khi việc xử lý những hành động này là riêng biết. Cách tốt hơn đó là chúng ta có thể chia ra mỗi hành động sử dụng một schema \(và schema này có thể không cần ánh xạ với một bảng trong cơ sở dữ liệu\)
 
 Trong hai chương kế tiếp, chúng ta sẽ chia nhỏ những "bad practices" kể trên bằng cách khám phá cách sư dụng Ecto mà không sử dụng hoặc sử dụng nhiều schema trong một ngữ cảnh. Thông qua việc học cách `insert`, `delele`, thay đổi và `validate` dữ liệu với Ecto.
+
