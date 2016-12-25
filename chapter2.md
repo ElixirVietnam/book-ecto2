@@ -37,7 +37,7 @@ MyApp.Repo.insert_all(Post, [
 
 Các hàm `*_all` là cho phép các lập trình viên đọc, tạo mới, cập nhận và xoá nhiều đối tượng một lúc. Hãy xem tiếp một vài ví dụ.
 
-Nếu bạn muốn viết một bản báo cáo, nó khá là khó khăn để nghĩ làm sao các Schema trong ứng dụng của bạn lại ánh xạ với một bản báo cáo được sinh ra. Do đó, đơn giản hơn chúng ta sẽ viết một câu query chỉ trả về dữ liệu chúng ta cần mà không cần cố gắng gắn dữ liệu đó với bắt cứ Schema nào cả
+Nếu bạn muốn viết một bản báo cáo, nó khá là khó khăn để nghĩ làm sao các Schema trong ứng dụng của bạn lại ánh xạ với một bản báo cáo được sinh ra. Do đó, đơn giản hơn chúng ta sẽ viết một câu query chỉ trả về dữ liệu chúng ta cần mà không cần cố gắng gắn dữ liệu đó với bắt cứ Schema nào cả: 
 
 ```elixir
 def running_activities(start_at, end_at)
@@ -74,7 +74,7 @@ post = from p in "posts", where: [id: ^id]
 {1, _} = MyApp.Repo.delete_all post
 ```
 
-Không khó để thấy rằng những hoạt động này được ánh xạ trực tiếp tới các câu query SQL tương ứng. Điều này giúp bạn có thể tương tác trực tiếp với Database mà không cần tạo các Schema không cần thiết
+Không khó để thấy rằng những hoạt động này được ánh xạ trực tiếp tới các câu query SQL tương ứng. Điều này giúp bạn có thể tương tác trực tiếp với Database mà không cần tạo các Schema không cần thiết.
 
 ## Các câu queries đơn giản hơn
 
