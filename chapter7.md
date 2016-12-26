@@ -10,7 +10,7 @@ _\(lời người dịch\) chỗ này dịch hơi gượng, bạn nào có thể
 
 Ecto 1.0 trở thành một nền tảng nhanh và bảo mật theo hướng này, và kết quả là nó trở nên kết dính khá chắt theo nhiều mặt.
 
-Ecto 2.0 cải thiện những sai sót tạo ra bởi Ecto 1.0 và sau đó xay dựng trên những nền tảng của Ecto 1.0 bằng cách thêm vào sự linh động mà cộng đồng đợi chờ từ lâu. Chúng ta đã khám phá rất nhiều tính linh động này trong các chương trước của cuốn sách như: query schemaless, changeset schemaless, query động, ... Trong 3 chương kế tiép, chúng ta sẽ khám phá thêm nhưng cải tiến đối với schema và associations.
+Ecto 2.0 cải thiện những sai sót tạo ra bởi Ecto 1.0 và sau đó xây dựng trên những nền tảng của Ecto 1.0 bằng cách thêm vào sự linh động mà cộng đồng đợi chờ từ lâu. Chúng ta đã khám phá rất nhiều tính linh động này trong các chương trước của cuốn sách như: query schemaless, changeset schemaless, query động, ... Trong 3 chương kế tiếp, chúng ta sẽ khám phá thêm nhưng cải tiến đối với schema và associations.
 
 Trong chương này, chúng ta sẽ học cách mà Ecto cho phép insert những cấu trúc dữ liệu phức tạp mà không cần phải sử dụng changesets, cũng như cách sử dụng tính năng này để quản lý các dữ liệu phức tạp, ví dụ như khi test ứng dụng của bạn mà không cần dựa vào các dự án bên ngoài.
 

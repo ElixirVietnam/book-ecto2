@@ -136,5 +136,5 @@ test "filter published at based on the given date" do
 end
 ```
 
-Trong khi cuối cùng, một vài lập trình viên sẽ vẩn cảm thấy thoải mái hơn với cách sử dụng `Enum.reduce/3`, tuy nhiên Ecto 2.0 và các phiên bản sau cho chúng ta được quyền lựa chọn cách tiếp cận nào là phù hợp nhất.
+Trong khi cuối cùng, một vài lập trình viên sẽ vẫn cảm thấy thoải mái hơn với cách sử dụng `Enum.reduce/3`, tuy nhiên Ecto 2.0 và các phiên bản sau cho chúng ta được quyền lựa chọn cách tiếp cận nào là phù hợp nhất.
 
