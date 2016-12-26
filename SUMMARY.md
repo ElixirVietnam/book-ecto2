@@ -8,3 +8,4 @@
 * [Aggregates và subquery](chapter6.md)
 * [Cải thiện associations và factories](chapter7.md)
 * [Quan hệ nhiều nhiều và casting](chapter8.md)
+* [Quan hệ nhiều nhiều và upserts](chapter9.md)
