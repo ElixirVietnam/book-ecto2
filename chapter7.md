@@ -149,5 +149,5 @@ insert!(:post, title: "custom title")
 #=> %MyApp.Post(id: ..., title: "custom title")
 ```
 
-Bằng cách xây dựng các chức năng mà chúng ta cần dựa trên khả năng của Ecto, chúng ta có thể mở rộng và cải thiện các Factory theo bất cứ hướng nào mà chúng ta muốn, thay vì bị phụ thuộc vào giới hạn của các thư viên bên thứ ba.
+Bằng cách xây dựng các chức năng mà chúng ta cần dựa trên khả năng của Ecto, chúng ta có thể mở rộng và cải thiện các Factory theo bất cứ hướng nào mà chúng ta muốn, thay vì bị phụ thuộc vào giới hạn của các thư viện bên thứ ba.
 
