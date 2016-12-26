@@ -35,7 +35,7 @@ MyApp.Repo.insert_all(Post, [
 ])
 ```
 
-Các hàm `*_all` là cho phép các lập trình viên đọc, tạo mới, cập nhận và xoá nhiều đối tượng một lúc. Hãy xem tiếp một vài ví dụ.
+Các hàm `*_all` là cho phép các lập trình viên đọc, tạo mới, cập nhật và xoá nhiều đối tượng một lúc. Hãy xem tiếp một vài ví dụ.
 
 Nếu bạn muốn viết một bản báo cáo, nó khá là khó khăn để nghĩ làm sao các Schema trong ứng dụng của bạn lại ánh xạ với một bản báo cáo được sinh ra. Do đó, đơn giản hơn chúng ta sẽ viết một câu query chỉ trả về dữ liệu chúng ta cần mà không cần cố gắng gắn dữ liệu đó với bắt cứ Schema nào cả:
 
@@ -105,7 +105,7 @@ end
 
 Hàm `update` cũng hỗ trợ bốn câu lệnh:
 
-* `:set` - thay đổi giá trị của một cột với một gía trị cụ thể
+* `:set` - thay đổi giá trị của một cột với một giá trị cụ thể
 * `:inc` - tăng giá trị của côt lên một giá trị cụ thể
 * `:push` - đẩy một giá trị mới vào mảng
 * `:pull` - xoá một giá trị cụ thể ra khỏi mảng
@@ -119,5 +119,5 @@ def increment_page_views(post) do
 end
 ```
 
-Bằng cách cho phép các cấu trúc dữ liệu thông thường có thể truyền vào hấu hết các hoạt động của query, Ecto 2.0 làm cho các câu query trở nên dễ dàng hơn. Không chỉ vậy, nó còn cho phép các lập trình viên có thể viết ra các câu query động, khi mà các trường, các điều kiện lọc, hoặc việc sắp xếp kết quả trả về không thể xác định trước được. Chúng ta sẽ khám phá chi tiết những tính năng này trong các chương tiếp theo. Hiện tại, hãy cùng tiếp tục xem cách sử dụng schemas trong ngữ cảnh của Changeset
+Bằng cách cho phép các cấu trúc dữ liệu thông thường có thể truyền vào hầu hết các hoạt động của query, Ecto 2.0 làm cho các câu query trở nên dễ dàng hơn. Không chỉ vậy, nó còn cho phép các lập trình viên có thể viết ra các câu query động, khi mà các trường, các điều kiện lọc, hoặc việc sắp xếp kết quả trả về không thể xác định trước được. Chúng ta sẽ khám phá chi tiết những tính năng này trong các chương tiếp theo. Hiện tại, hãy cùng tiếp tục xem cách sử dụng schemas trong ngữ cảnh của Changeset
 
