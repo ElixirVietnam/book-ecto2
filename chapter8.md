@@ -80,7 +80,7 @@ Bằng cách gọi `Ecto.Changeset.cast_assoc/3`, Ecto sẽ tìm kiếm khoá "t
 
 + Nếu một todo item được truyền như một tham số có ID, và nó bằng với một todo item đã được gắn với todo list, chúng ta sẽ coi đó là hành động update todo item.
 + Nếu một todo item được truyền vào không có ID (hoặc không bằng với bất cứ ID nào), chúng ta sẽ coi đó là hành động thêm mới một todo item.
-+ Nếu một todo item đang được gắn với todo list, nhưng ID của nó không được truyền vào như một tham số, chúng ta coi todo item đó đã được thay thế, và chúng ta sẽ hành động dựa vào callback `:on_replace`. Mặc định `:on_replace` sẽ được gọi, vì thế bạn có thể chọn một cách hành xử giữa việc thay thế, xoá, bỏ quả hoăc là nillifying association.
++ Nếu một todo item đang được gắn với todo list, nhưng ID của nó không được truyền vào như một tham số, chúng ta coi todo item đó đã được thay thế, và chúng ta sẽ hành động dựa vào callback `:on_replace`. Mặc định `:on_replace` sẽ được gọi, vì thế bạn có thể chọn một cách hành xử giữa việc thay thế, xoá, bỏ quả hoặc là nillifying association.
 
 Lợi điểm của việc sử dụng `cast_assoc/3` đó là **nếu như chúng ta truyền vào dữ liệu chính xác như những định dạng mà Ecto mong muốn**, nó có thể làm tất cả những việc khó để giữ cho các bản ghi được liên kết với nhau. Tuy nhiên, như chúng ta học được ở 3 chương đầu của cuốn sách này, cách tiếp cận này không phải là cách làm mong muốn trong mọi trường hợp, và trong rất nhiều tình huống, chúng ta muốn thiết kế các associations khác biệt hơn, hoặc là phân tách giữa UI với việc biểu diễn Database của chúng ta.
 
@@ -294,11 +294,11 @@ defmodule MyApp.TodoList do
 end
 ```
 
-Trong trường hợp này, bạn có thể loại bỏ hoàn toàn schema `MyApp.TodoListItem` khỏi ứng dụng của bạn, và đoạn code trên vẫn hoạt động. Điêm khác biệt duy nhất đó là khi sử dụng table, tất cả những giá trị được sinh ra tự động bởi Ecto, ví dụ như `timestamps` sẽ không được tạo ra nữa (vì chúng ta đâu có dùng schema). Để giải quyết vấn đề này, bạn có thể đơn giản là loại bỏ những trường này ra khỏi migration của bạn, hoặc là khởi tạo cho chúng những giá trị mặc định ở mức Database
+Trong trường hợp này, bạn có thể loại bỏ hoàn toàn schema `MyApp.TodoListItem` khỏi ứng dụng của bạn, và đoạn code trên vẫn hoạt động. Điểm khác biệt duy nhất đó là khi sử dụng table, tất cả những giá trị được sinh ra tự động bởi Ecto, ví dụ như `timestamps` sẽ không được tạo ra nữa (vì chúng ta đâu có dùng schema). Để giải quyết vấn đề này, bạn có thể đơn giản là loại bỏ những trường này ra khỏi migration của bạn, hoặc là khởi tạo cho chúng những giá trị mặc định ở mức Database
 
 ## Tổng kết
 
-Trong chương này, chúng ta đã sử dụng `many_to_many` để cải thiện đáng kể thiết kế với các liên kết đa hình mà trước đây dựa vào `has_many :through`. Mục tiêu của chúng ta là cho phếp các "todo items" có thể liên kết với nhiều loại thực thể khác nhau trong code base, giống như "todo list" và "project". Chúng ta thực hiện nó bằng cách tạo ra các bảng trung gian, và sử dụng `many_to_many` để tự động quản lý nhưng bảng nối này.
+Trong chương này, chúng ta đã sử dụng `many_to_many` để cải thiện đáng kể thiết kế với các liên kết đa hình mà trước đây dựa vào `has_many :through`. Mục tiêu của chúng ta là cho phép các "todo items" có thể liên kết với nhiều loại thực thể khác nhau trong code base, giống như "todo list" và "project". Chúng ta thực hiện nó bằng cách tạo ra các bảng trung gian, và sử dụng `many_to_many` để tự động quản lý nhưng bảng nối này.
 
 Cuối cùng, schema của chúng ta sẽ như sau:
 
