@@ -27,7 +27,7 @@ Repo.transaction(fn ->
 end)
 ```
 
-Nói cách khác, transaction trong Ecto có thể bị lồng nhau. Ví dụ, tưởng tượng các transaction ở trên bị di chuyển vào một hàm khác, `transfer_money(mary, john, 10)`, và bên cạnh việc chuyển tiền, chúng ta cũng muốn log lại giao dịch này:
+Nói cách khác, transaction trong Ecto có thể bị lồng nhau. Ví dụ, tưởng tượng các transaction ở trên bị di chuyển vào một hàm khác, `transfer_money(mary, john, 10)`, và bên cạnh việc chuyển tiền, chúng ta cũng muốn lưu lại giao dịch này:
 
 ```elixir
 Repo.transaction(fn ->
@@ -42,7 +42,7 @@ end)
 
 Đoạn code ở trên chạy trong một transaction, và sau đó gọi hàm `transfer_money/3` cũng chạy trong một transaction. Đoạn code này có thể làm việc bởi vì Ecto chuyển hoá bất cứ transaction lồng (nested transaction) thành một savepoint một cách tự động. Trong trường hợp transaction ở trong bị thất bại, nó sẽ rollback về một điểm savepoint cụ thể.
 
-Trong khi transaction lồng có thể giúp code dễ đọc hơn bằng cách chia nhỏ các transaction lớn thành nhiều transaction con nhỏ hơn, vẫn có một vài vấn đề về tính rườm ra khi phải xử lý transaction dựa vào việc transaction đó có thành công hay không. Hơn thế nữa, việc lồng nhau khá là giới hạn, vì tất cả các hoạt động sẽ phải thực hiện trong một transaction chủ ở bên ngoài.
+Trong khi transaction lồng có thể giúp code dễ đọc hơn bằng cách chia nhỏ các transaction lớn thành nhiều transaction con nhỏ hơn, vẫn có một vài vấn đề về tính rườm rà khi phải xử lý transaction dựa vào việc transaction đó có thành công hay không. Hơn thế nữa, việc lồng nhau khá là giới hạn, vì tất cả các hoạt động sẽ phải thực hiện trong một transaction chủ ở bên ngoài.
 
 Một cách tiếp cận tốt (declarative) hơn đó là **định nghĩa tất cả các hoạt động mà chúng ta muốn thực hiện trong một transaction tách biệt với việc thực thi transaction đó**. Với cách này, chúng ta có thể tạo nên hoạt động của transaction mà không cần phải quan tâm tới ngữ cảnh thực thi hay là kịch bản thành công/thất bại của từng hoạt động riêng lẻ. Đó chính xác là cách mà `Ecto.Multi` sẽ cho phép chúng ta xây dựng.
 
@@ -53,8 +53,7 @@ Hãy cùng viết lại đoạn code ở trên với `Ecto.Multi`. Đoạn code 
 ```elixir
 Ecto.Multi.new
 |> Ecto.Multi.update(:mary, Ecto.Changeset.change(mary, balance: mary.balance - 10))
-|> Ecto.Multi.update(:john, Ecto.Changeset.change(john, balance:
-john.balance + 10))
+|> Ecto.Multi.update(:john, Ecto.Changeset.change(john, balance: john.balance + 10))
 ```
 
 `Ecto.Multi` là một cấu trúc dữ liệu cho phép chúng ta định nghĩa các hoạt động nào phải được thực hiện cùng nhau mà không cần quan tâm về việc chúng sẽ được thực hiện ở đâu, và thực hiện như nào. `Ecto.Multi` có phần lớn các API giống với `Ecto.Repo`, với sự khác biệt là mỗi một hoạt động phải có một tên cụ thể. Trong ví dụ trên, chúng ta đã định nghĩa 2 hoạt động cập nhật, với các tên `:mary`, `:john`. Như chúng ta sẽ thấy, các tên này rất quan trọng khi xử lý kết quả của những hoạt động này.
@@ -82,7 +81,7 @@ end
 
 Nếu tất cả các hoạt động trong multi đều thành công, hàm `Repo.transaction` sẽ trả về `{:ok, map}` trong đó `map` là một map có khoá là tên của tất cả các hoạt động, và value của khoá là giá trị được trả về khi hành động với khoá đó thành công. Nếu bất cứ hành động nào thất bại, transaction sẽ phải được roll back và hàm `Repo.transaction` trả về `{:error, name, value, rolled_back_changes}` trong đó `name` là tên của hoạt động thất bại, `value` là giá trị trả về của hoạt động đó, `rolled_back_changeset` là map của các hoạt động thành công khác được thực thi trước hành động thất bại.
 
-Nói cách khác, `Ecto.Multi` tự quản lý hết các luồng điều khiển cho chúng ta, trong khi nó phân tách định nghĩa transaction, và cách transaction này được thực thi, điều này cho phép chúng ta có thể tạo ra các hành động một cách rất đơn giản.
+Nói cách khác, `Ecto.Multi` tự quản lý hết các luồng điều khiển cho chúng ta, trong khi nó phân tách định nghĩa transaction với cách transaction này được thực thi, điều này cho phép chúng ta có thể tạo ra các hành động một cách rất đơn giản.
 
 ## Testing
 
@@ -214,4 +213,4 @@ Trong ví dụ trên, chúng ta đã sử dụng `Ecto.Multi.run/3` hai lần v�
 
 2. Trong `Ecto.Multi.run(:post, ...)`, chúng ta sử dụng `run/3` vì chúng ta cẩn truy cập vào giá trị của hoạt động trước đó. Tham số đầu tiên của `run/3` là một map với kết quả của các hoạt động trước. Để lấy tags được trả về từ bước trước, chúng ta đơn giản chỉ cần sử dụng pattern matching trên `%{tags: tags)`.
 
-Trong khi `run/3` khá là tiện dụng khi cần phải thực hiện những API mà `Ecto.Multi` chưa hỗ trợ trực tiếp, nó có một điểm dở đó là các hoạt động định nghĩa bởi `Ecto.Multi.run/3` là mờ (opaque), và do đó, chung không thể nào test được bằng cách dùng `Ecto.Multi.to_list/1` như chúng ta dùng ở phần trước. Mặc dù vậy, `Ecto.Multi` vẫn cho phép chúng ta có thể giảm thiểu rất nhiều những đoạn code rườm rà khi làm việc với transaction. 
+Trong khi `run/3` khá là tiện dụng khi cần phải thực hiện những API mà `Ecto.Multi` chưa hỗ trợ trực tiếp, nó có một điểm dở đó là các hoạt động định nghĩa bởi `Ecto.Multi.run/3` là mờ (opaque), và do đó, chung không thể nào test được bằng cách dùng `Ecto.Multi.to_list/1` như chúng ta dùng ở phần trước. Mặc dù vậy, `Ecto.Multi` vẫn cho phép chúng ta có thể giảm thiểu rất nhiều những đoạn code rườm rà khi làm việc với transaction.
