@@ -1,6 +1,6 @@
 # Concurrent tests với SQL Sandbox
 
-Chương cuối của chúng ta sẽ nói về một trong những tính năng quan trọng nhất của Ecto 2.0: concurent SQL sanbox. Với sức mạnh của Elixir có thể tận dụng tất cả các tài nguyên còn rảnh rỗi của máy tính, khả năng chạy các test song song để nói chuyện với Database có thể giúp lập trình viên tăng tốc thời gian chạy bộ test lên 2x, 4x, 8x hoặc hơn nữa dựa vào số lượng nhân của máy.
+Chương cuối của chúng ta sẽ nói về một trong những tính năng quan trọng nhất của Ecto 2.0: concurrent SQL sanbox. Với sức mạnh của Elixir có thể tận dụng tất cả các tài nguyên còn rảnh rỗi của máy tính, khả năng chạy các test song song để nói chuyện với Database có thể giúp lập trình viên tăng tốc thời gian chạy bộ test lên 2x, 4x, 8x hoặc hơn nữa dựa vào số lượng nhân của máy.
 
 Bất cứ khi nào bạn khởi động một Ecto Repository trong cây supervision bằng cách gọi `supervisor(MyApp.Repo, [])`, Ecto sẽ khởi tạo một supervisor với một connection pool. Connection pool này sẽ chứa nhiều connection tới Database. Khi bạn muốn thực hiện một hoạt động với Database, Ecto sẽ tự động lấy ra một connection từ trong pool, thực thi hoạt động của bạn, và sau đó đẩy connection trở về pool.
 
@@ -88,7 +88,7 @@ Một khi chúng ta tạo ra một `Task`, sẽ không có connection nào đư�
 
 Trong khi một lớn thời gian chúng ta muốn các process khác nhau sẽ sở hữu các database connection khác nhau, đôi khi một test có thể muốn tương tác với nhiều process, tất cả cùng sử dụng chung một connection để chúng có thể cùng thuộc về một transaction.
 
-Sandbox module đưa ra 2 giải pháp để giải quyết chuyện này, thông qua "allowances" hoặc chạy trong chế độ chia sẻ
+Sandbox module đưa ra 2 giải pháp để giải quyết chuyện này, thông qua "allowances" hoặc chạy trong chế độ chia sẻ.
 
 ## Allowances
 
@@ -108,7 +108,7 @@ end
 
 Bằng cách gọi `allow/3`, chúng ta gán connection của process cha (chính là connection của test) một cách tường minh với task này.
 
-Bởi vì allowances sử dụng cơ chế tường mình, lợi điểm của nó là bạn vãn có thể chạy các test trong chế độ async. Bất lợi là bạn sẽ phải điểu khiển và cho phép mọi process còn một cách tường minh, điều này không phải luôn luôn là khả thi. Trong những trường hợp như vậy, bạn có thể sẽ cần dùng tới chế độ chia sẻ
+Bởi vì allowances sử dụng cơ chế tường mình, lợi điểm của nó là bạn vẫn có thể chạy các test trong chế độ async. Bất lợi là bạn sẽ phải điểu khiển và cho phép mọi process còn một cách tường minh, điều này không phải luôn luôn là khả thi. Trong những trường hợp như vậy, bạn có thể sẽ cần dùng tới chế độ chia sẻ.
 
 ## Shared mode
 

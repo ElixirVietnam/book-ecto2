@@ -110,7 +110,7 @@ Hàm `update` cũng hỗ trợ bốn câu lệnh:
 * `:push` - đẩy một giá trị mới vào mảng
 * `:pull` - xoá một giá trị cụ thể ra khỏi mảng
 
-Ví dụ, chúng ta có thể tăng giá trị của cột một cách tự động bằng cách sự dụng lệnh `:inc` \(sử dụng hoặc không sử dụng schema\)
+Ví dụ, chúng ta có thể tăng giá trị của cột một cách tự động bằng cách sử dụng lệnh `:inc` \(sử dụng hoặc không sử dụng schema\)
 
 ```elixir
 def increment_page_views(post) do
