@@ -19,3 +19,5 @@
 * [Chương 9: Quan hệ nhiều nhiều và upserts](chapter9.md)
 
 * [Chương 10: Tạo transaction với Ecto.Multi](chapter10.md)
+
+* [Chương 11: Concurrent tests với SQL Sandbox](chapter11.md)
